@@ -327,6 +327,10 @@ Expected Output
 
 ![Correlation Summary Plot](artifacts/images/flow.png)
 
+Figure: End-to-end inference and alert decision workflow.
+Patient and physician data are first preprocessed to build model-ready features. The trained pipeline (.joblib) computes the treatment probability p(x) for eligible patients. If p(x) falls below the configurable alert threshold, the system flags an under-treatment alert and logs the decision for auditability.
+
+
 ---
 
 ### ⚙️ Error Handling & Logging
