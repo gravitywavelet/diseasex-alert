@@ -95,12 +95,12 @@ The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innova
 |:------|:--------:|:------:|:---:|:----:|:---:|:--:|:--:|
 | Logistic Regression | 0.74 | 0.33 | 0.70 | 0.30 | 0.63 | 0.41 | 0.52 |
 | Random Forest | 0.75 | 0.34 | 0.71 | 0.31 | 0.63 | 0.41 | 0.52 |
-| LightGBM | 0.76 | 0.35 | 0.70 | 0.30 | 0.67 | 0.41 | 0.53 |
-| **XGBoost (final)** | **0.76 – 0.78** | **0.35 – 0.36** | **0.70** | **0.30** | **0.68** | **0.41** | **0.54** |
+| LightGBM | 0.75 | 0.345 | 0.70 | 0.30 | 0.67 | 0.41 | 0.53 |
+| **XGBoost (final)** | **0.758** | **0.352** | **0.70** | **0.30** | **0.68** | **0.41** | **0.54** |
 
 ![model result plot](artifacts/images/result.png)
 
-### cross-validation (CV) strategy
+### Cross-validation (CV) strategy
 
 The model was evaluated using a 5×2 cross-validation (CV) strategy — that is, 5 folds repeated twice with different random splits to ensure stable and unbiased performance estimation.
 This approach provides both variance estimation and robustness across different train/test partitions.
