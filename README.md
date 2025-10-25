@@ -185,7 +185,7 @@ Chosen for its strong balance of **accuracy, recall, and interpretability**.
 
 
 ![SHAP Summary Plot](artifacts/images/SHAP.png)
-![SHAP Summary Plot](artifacts/images/corr.png)
+![Correlation Summary Plot](artifacts/images/corr.png)
 ---
 
 # 🩺 Step 4 – EMR Alert Simulation
@@ -267,6 +267,10 @@ Response:
   "threshold": 0.40,
   "message": "✅ Likely to be treated"
 }
+
+![API test Plot](artifacts/images/api.png)
+
+
 ⸻
 
 ## 🚀 Step 6 Containerization: Docker Deployment
@@ -321,16 +325,7 @@ Expected Output
 | **Containerization** | Dockerized deployment ensuring full reproducibility and environment portability. |
 
 
-flowchart LR
-    A[Patient JSON Input] --> B[Schema & Type Validation]
-    B --> C[Preprocessing & Feature Building]
-    C --> D[Load Trained Pipeline (joblib)]
-    D --> E[Model.predict_proba(x)]
-    E --> F{p_treated < ALERT_THRESHOLD?}
-    F -- Yes --> G[Flag as Alert (Under-treated Risk)]
-    F -- No --> H[No Alert]
-    G --> I[Log Decision & Return JSON]
-    H --> I[Log Decision & Return JSON]
+![Correlation Summary Plot](artifacts/images/flow.png)
 
 ---
 
@@ -354,6 +349,8 @@ flowchart LR
 | **Data** | Maintain versioned processed data (e.g., `data/processed/model_table_v1.csv`) while ensuring schema consistency. |
 | **Merging** | Use Pull Requests (PRs) for all merges; apply *squash commits* to keep history concise and meaningful. |
 | **Conflict Resolution** | Rebase local changes onto `main` before merging and resolve conflicts using VSCode merge tools or CLI (e.g., `git mergetool`). |
+
+
 
 ⸻
 
