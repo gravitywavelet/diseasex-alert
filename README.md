@@ -122,14 +122,14 @@ All features in `data/processed/model_table.csv` are derived from the cleaned EM
 
 ## 🤖 Step 3 – Modeling & Evaluation
 
-Four types of models were evaluated. Logistic Regression was used as a sanity check and performed surprisingly well, providing a strong baseline. LightGBM delivered reasonable performance with much faster training speed than XGBoost, though its overall accuracy was slightly lower. XGBoost achieved the best balance between performance and interpretability. Deep learning methods were not applied, as their black-box nature makes them difficult to interpret — a critical limitation in medical applications where explainability is essential.
+Four types of models were evaluated. Logistic Regression was used as a sanity check and performed surprisingly well, providing a strong baseline. LightGBM delivered reasonable performance with faster training speed than XGBoost, though its overall accuracy was slightly lower. XGBoost achieved the best overall performance (especially F2). Deep learning methods were not applied, as their black-box nature makes them difficult to interpret — a critical limitation in medical applications where explainability is essential.
 
 | Model | ROC-AUC | PR-AUC | Acc | Prec | Rec | F1 | F2 |
 |:------|:--------:|:------:|:---:|:----:|:---:|:--:|:--:|
 | Logistic Regression | 0.75 | 0.33 | 0.68 | 0.28 | 0.63 | 0.41 | 0.53 |
 | Random Forest | 0.73 | 0.34 | 0.67 | 0.31 | 0.63 | 0.41 | 0.52 |
 | LightGBM | 0.74 | 0.34 | 0.68 | 0.28 | 0.67 | 0.41 | 0.53 |
-| **XGBoost (final)** | **0.756** | **0.347** | **0.7093** | **0.300** | **0.668** | **0.414** | **0.536** |
+| **XGBoost (final)** | **0.758** | **0.352** | **0.699** | **0.299** | **0.678** | **0.415** | **0.541** |
 
 ![model result plot](artifacts/images/result.png)
 
