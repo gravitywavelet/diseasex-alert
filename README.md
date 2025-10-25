@@ -1,15 +1,14 @@
 # 🧬 DiseaseX — Treatment Propensity & EMR Alert Simulation
 
-# Overview
+## Overview
 
 This project builds a complete, modular pipeline to predict which patients are less likely to be treated with Drug A for Disease X and to simulate EMR alerts that can guide physician follow-up.
 It covers data cleaning → feature engineering → machine-learning modeling → explainability → deployment via FastAPI + Docker.
 
-![SHAP Summary Plot](notebooks/artifacts/ema.png)
 
 ⸻
 
-# Project Overview
+## Project Overview
 
 This project follows the full data-to-deployment pipeline:
 
@@ -28,10 +27,10 @@ Steps Description
 
 ![Folder Strucure](/artifacts/images/foldtree.png)
 ---
-# Step 0 - EDA (Evaluate data and form actions to be taken)
+## Step 0 - EDA (Evaluate data and form actions to be taken)
 Scripts in `notebooks/0_EDA.ipynb`
 
-# 🧹 Step 1 – Data Cleaning
+## 🧹 Step 1 – Data Cleaning
 Scripts in `notebooks/1a_Preprocessing_clean.ipynb` and `notebooks/1b_EDA_post_clean.ipynb`  normalize column names, unify string formats, and enforce correct types.
 **Key actions**
 
@@ -53,7 +52,7 @@ Clean versions of all three tables:
 
 ---
 
-# 🧠 Step 2 – Feature Engineering
+## 🧠 Step 2 – Feature Engineering
 Each row in `model_table.csv` corresponds to a **unique patient_id**.
 
 | Category | Features | Description |
@@ -65,7 +64,7 @@ Each row in `model_table.csv` corresponds to a **unique patient_id**.
 | **Physician & Location** | `PHYSICIAN_TYPE`, `PHYSICIAN_STATE`, `LOCATION_TYPE`, `PHYS_TREAT_RATE` | Context of care and physician propensity |
 | **Target** | `TARGET` | Whether the patient ever received Drug A |
 
-# 🆕 New Features Added
+### New Features Added
 
 In addition to the base columns described in the data dictionary, the following **engineered features** were created to improve model performance and interpretability:
 
@@ -90,7 +89,7 @@ The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innova
 
 ---
 
-# 🤖 Step 3 – Modeling & Evaluation
+## 🤖 Step 3 – Modeling & Evaluation
 
 | Model | ROC-AUC | PR-AUC | Acc | Prec | Rec | F1 | F2 |
 |:------|:--------:|:------:|:---:|:----:|:---:|:--:|:--:|
@@ -102,13 +101,13 @@ The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innova
 
 
 
-# 🏆 Final Model: XGBoost (`model_minimal.joblib`)
+## 🏆 Final Model: XGBoost (`model_minimal.joblib`)
 Chosen for its strong balance of **accuracy, recall, and interpretability**.
 - Robust to mixed categorical / numeric inputs via one-hot encoding
 - Handles **non-linear effects** and **imbalanced classes** using `scale_pos_weight`
 - Provides **SHAP-based explainability**, enabling feature-level insights
 
-# 📈 Model Insights (SHAP Feature Contributions)
+## 📈 Model Insights (SHAP Feature Contributions)
 **Top positive influencers (increase treatment likelihood):**
 - **`PATIENT_AGE`** ↑ — older patients more likely to receive Drug A (<80)
 - **`NUM_CONDITIONS`** ↑ — more comorbidities → higher likelihood
@@ -120,7 +119,6 @@ Chosen for its strong balance of **accuracy, recall, and interpretability**.
 - **`younger patients` (< 40 yrs)** — less likely to be treated despite eligibility
 - **`high contraindication levels`** — safety constraints decreasing probability
 
-> *LightGBM produced comparable performance (ROC ≈ 0.76) but was ultimately not selected due to slightly higher variance in recall and less stable SHAP consistency.*
 
 ![SHAP Summary Plot](artifacts/images/SHAP.png)
 ![SHAP Summary Plot](artifacts/images/corr.png)
@@ -141,23 +139,18 @@ Alerts target **least likely to be treated**.
 
 ---
 
-# 🚀 Step 5 – API Deployment (FastAPI + Docker)
+## 🚀 Step 5 – API Deployment (FastAPI + Docker)
 
-# ⚙️ Setup and Local Run
+## ⚙️ Setup and Local Run
 
-# 1️⃣ Create a virtual environment
-```bash
-python -m venv .venv_diseasex
-source .venv_diseasex/bin/activate
-pip install -r requirements.txt
-
-1️⃣ Create a virtual environment
+###  Create a virtual environment
 
 python -m venv .venv_diseasex
 source .venv_diseasex/bin/activate
 pip install -r requirements.txt
 
-2️⃣ Train the model
+
+### Train the model
 
 python -m training.train --model xgb
 
@@ -167,7 +160,7 @@ Outputs:
 
 ⸻
 
-# 🧠 Model Details
+### 🧠 Model Details
 
 | **Component** | **Description** |
 |----------------|-----------------|
@@ -181,11 +174,11 @@ Outputs:
 
 🧩 Run the FastAPI Service
 
-1️⃣ Start API locally
+1. Start API locally
 
 uvicorn app.main:app --reload --port 8000
 
-2️⃣ Example request
+2. Example request
 
 Endpoint: POST /predict
 
@@ -212,17 +205,17 @@ Response:
 }
 ⸻
 
-# 🚀 Step 5 Containerization: Docker Deployment
+## 🚀 Step 5 Containerization: Docker Deployment
 
-1️⃣ Build the image
+### Build the image
 
 docker build -t diseasex-alert .
 
-2️⃣ Run the container
+### Run the container
 
 docker run --rm -p 8000:8000 diseasex-alert
 
-3️⃣ Test via curl
+### Test via curl
 
 curl -s http://localhost:8000/predict \
   -H "Content-Type: application/json" \
@@ -251,9 +244,9 @@ Expected Output
 
 ⸻
 
-# 🚀 Step 6  Software Architecture
+## 🚀 Step 6  Software Architecture
 
-# 🧩 Components Overview
+### 🧩 Components Overview
 
 | **Layer** | **Description** |
 |------------|-----------------|
@@ -265,7 +258,7 @@ Expected Output
 
 ---
 
-# ⚙️ Error Handling & Logging
+### ⚙️ Error Handling & Logging
 
 - Central FastAPI middleware logs every API request with timestamps.
 - All inference steps are wrapped in `try/except` blocks to gracefully handle missing or malformed data.
@@ -275,9 +268,8 @@ Expected Output
 
 ⸻
 
-7. Version Control Strategy
 
-# 🧭 Version Control Strategy
+## 🧭 Version Control Strategy
 
 | **Element** | **Strategy** |
 |--------------|--------------|
@@ -289,7 +281,7 @@ Expected Output
 
 ⸻
 
-# 🧩 Design Choices
+### 🧩 Design Choices
 
 - **XGBoost & Random Forest Models:**
   Chosen for strong performance on structured clinical data, handling mixed feature types and class imbalance effectively.
@@ -308,7 +300,7 @@ Expected Output
 
 ---
 
-# ⚙️ Scalability Notes
+### ⚙️ Scalability Notes
 
 - **Batch & Streaming Inference:**
   Supports batch predictions or can be extended to real-time streaming (e.g., Kafka, AWS Kinesis) for hospital-scale data flow.
@@ -327,7 +319,7 @@ Expected Output
 
 ---
 
-# 🔁 MLOps Integration
+### 🔁 MLOps Integration
 
 - **CI/CD Pipeline:**
   Continuous integration (via GitHub Actions or GitLab CI) automatically tests, builds, and deploys new model versions.
@@ -344,7 +336,7 @@ Expected Output
 - **Environment Parity:**
   Docker and `requirements.txt` ensure identical configurations across dev, staging, and production environments.
 
-# 🔁 MLOps Integration
+### 🔁 MLOps Integration
 
 - **CI/CD Pipeline:**
   Continuous integration (via GitHub Actions or GitLab CI) automatically tests, builds, and deploys new model versions.
@@ -365,7 +357,7 @@ Expected Output
 
 ⸻
 
-🏁 Deliverables Summary
+## 🏁 Deliverables Summary
 
 ✅ model_table.csv included under data/processed/
 ✅ ML model saved as artifacts/model_minimal.joblib
