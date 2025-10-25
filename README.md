@@ -61,16 +61,17 @@ Clean versions of all three tables:
 ## 🧠 Step 2 – Feature Engineering
 Each row in `model_table.csv` corresponds to a **unique patient_id**.
 
+---
+
 | **Category** | **Features** | **Description** | **Rationale** |
 |---------------|--------------|------------------|----------------|
-| **Demographics** | `PATIENT_AGE`, `PATIENT_GENDER`, `IS_AGE65PLUS`, `AGE_GE_12` | Derived from birth year and diagnosis or symptom onset | Captures demographic eligibility and age-related treatment bias |
-| **Clinical Risk** | `NUM_CONDITIONS`, `HAS_UNDERLYING`, `HIGH_RISK`, `ELIGIBLE` | Encodes comorbidity and eligibility logic | Reflects patient-level risk factors influencing treatment decisions |
-| **Contraindications** | `CONTRAINDICATION_LEVEL` | Ordinal feature (0–3) summarizing severity of contraindications | Represents safety constraints affecting physician decisions |
-| **Timing** | `DAYS_SYMPTOM_TO_DX` | Days between first symptom onset and Disease X diagnosis | Quantifies diagnostic delay, a strong predictor of treatment likelihood |
-| **Physician & Location** | `PHYSICIAN_TYPE`, `PHYSICIAN_STATE`, `LOCATION_TYPE`, `PHYS_TREAT_RATE` | Context of care and physician prescribing propensity | Models behavioral and geographical differences in treatment patterns |
-| **Target** | `TARGET` | Binary outcome — whether the patient received Drug A | Serves as the supervised learning label for model training |
+| **Demographics** | `PATIENT_AGE`, `PATIENT_GENDER`, `IS_AGE65PLUS`, `AGE_GE_12` | Derived from birth year and diagnosis or symptom onset | Captures demographic eligibility <br> and age-related treatment bias |
+| **Clinical Risk** | `NUM_CONDITIONS`, `HAS_UNDERLYING`, `HIGH_RISK`, `ELIGIBLE` | Encodes comorbidity and eligibility logic | Reflects patient-level risk factors <br> influencing treatment decisions |
+| **Contraindications** | `CONTRAINDICATION_LEVEL` | Ordinal feature (0–3) summarizing severity of contraindications | Represents safety constraints <br> affecting physician decisions |
+| **Timing** | `DAYS_SYMPTOM_TO_DX` | Days between first symptom onset and Disease X diagnosis | Quantifies diagnostic delay <br> — a strong predictor of treatment likelihood |
+| **Physician & Location** | `PHYSICIAN_TYPE`, `PHYSICIAN_STATE`, `LOCATION_TYPE`, `PHYS_TREAT_RATE` | Context of care and physician prescribing propensity | Models behavioral and geographical <br> differences in treatment patterns |
+| **Target** | `TARGET` | Binary outcome — whether the patient received Drug A | Serves as the supervised learning <br> label for model training |
 
----
 
 New (non-trivial) features are:
 - `DAYS_SYMPTOM_TO_DX`
@@ -79,7 +80,10 @@ New (non-trivial) features are:
 - `HIGH_RISK`
 - `ELIGIBLE`
 
-The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innovative** — they demonstrate temporal and behavioral modeling, which aligns with data-driven business reasoning.
+The first two features — DAYS_SYMPTOM_TO_DX and PHYS_TREAT_RATE — are the most innovative, as they capture temporal and behavioral dynamics that align with real-world, data-driven decision processes.
+A Bayesian smoothing algorithm was specifically designed for PHYS_TREAT_RATE, since standard Laplacian smoothing introduced excessive noise when data were sparse (most physicians had only 0–1 diagnosed Disease X patient, and treated cases were even fewer).
+However, this approach did not perform as well as expected, likely due to a high proportion of missing or extremely limited physician-level data.
+
 
 ### 📄 Data Dictionary
 
@@ -122,10 +126,10 @@ Four types of models were evaluated. Logistic Regression was used as a sanity ch
 
 | Model | ROC-AUC | PR-AUC | Acc | Prec | Rec | F1 | F2 |
 |:------|:--------:|:------:|:---:|:----:|:---:|:--:|:--:|
-| Logistic Regression | 0.74 | 0.33 | 0.70 | 0.28 | 0.63 | 0.41 | 0.52 |
-| Random Forest | 0.73 | 0.34 | 0.71 | 0.31 | 0.63 | 0.41 | 0.52 |
+| Logistic Regression | 0.75 | 0.33 | 0.68 | 0.28 | 0.63 | 0.41 | 0.53 |
+| Random Forest | 0.73 | 0.34 | 0.67 | 0.31 | 0.63 | 0.41 | 0.52 |
 | LightGBM | 0.74 | 0.34 | 0.68 | 0.28 | 0.67 | 0.41 | 0.53 |
-| **XGBoost (final)** | **0.758** | **0.352** | **0.699** | **0.299** | **0.678** | **0.415** | **0.541** |
+| **XGBoost (final)** | **0.756** | **0.347** | **0.7093** | **0.300** | **0.668** | **0.414** | **0.536** |
 
 ![model result plot](artifacts/images/result.png)
 
