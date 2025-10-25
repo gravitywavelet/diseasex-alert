@@ -94,9 +94,9 @@ The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innova
 | Model | ROC-AUC | PR-AUC | Acc | Prec | Rec | F1 | F2 |
 |:------|:--------:|:------:|:---:|:----:|:---:|:--:|:--:|
 | Logistic Regression | 0.74 | 0.33 | 0.70 | 0.30 | 0.63 | 0.41 | 0.52 |
-| Random Forest | 0.75 | 0.34 | 0.71 | 0.31 | 0.63 | 0.41 | 0.52 |
-| LightGBM | 0.75 | 0.345 | 0.70 | 0.30 | 0.67 | 0.41 | 0.53 |
-| **XGBoost (final)** | **0.758** | **0.352** | **0.70** | **0.30** | **0.68** | **0.41** | **0.54** |
+| Random Forest | 0.73 | 0.34 | 0.71 | 0.31 | 0.63 | 0.41 | 0.52 |
+| LightGBM | 0.74 | 0.34 | 0.68 | 0.28 | 0.67 | 0.41 | 0.53 |
+| **XGBoost (final)** | **0.758** | **0.352** | **0.699** | **0.299** | **0.678** | **0.415** | **0.541** |
 
 ![model result plot](artifacts/images/result.png)
 
@@ -128,12 +128,11 @@ Search method:
 Goal: achieve high recall for under-treated patients while preventing overfitting.
 
 
-
 ## 🏆 Final Model: XGBoost (`model_minimal.joblib`)
 Chosen for its strong balance of **accuracy, recall, and interpretability**.
 - Robust to mixed categorical / numeric inputs via one-hot encoding
 - Handles **non-linear effects** and **imbalanced classes** using `scale_pos_weight`
-- Provides **SHAP-based explainability**, enabling feature-level insights
+- highest AUC-ROC, PR-AUC and especially F2
 
 ## 📈 Model Insights (SHAP Feature Contributions)
 **Top positive influencers (increase treatment likelihood):**
