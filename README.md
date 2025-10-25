@@ -87,6 +87,39 @@ So, your new (non-trivial) features are:
 
 The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innovative** — they demonstrate temporal and behavioral modeling, which aligns with data-driven business reasoning.
 
+### 📄 Data Dictionary
+
+All features in `data/processed/model_table.csv` are derived from the cleaned EMR tables (`fact_txn`, `dim_patient`, and `dim_physician`).
+
+| **Column** | **Description** |
+|-------------|-----------------|
+| `PATIENT_ID` | Unique patient identifier |
+| `PATIENT_AGE` | Age at time of Disease X diagnosis |
+| `PATIENT_GENDER` | Patient gender (`m` / `f`) |
+| `NUM_CONDITIONS` | Number of underlying conditions |
+| `HAS_UNDERLYING` | Binary flag (1 = has high-risk comorbidities) |
+| `IS_AGE65PLUS` | Binary flag (1 = patient ≥ 65 years) |
+| `AGE_GE_12` | Binary flag (1 = patient ≥ 12 years) |
+| `HIGH_RISK` | Composite flag (`IS_AGE65PLUS` or `HAS_UNDERLYING`) |
+| `ELIGIBLE` | Clinical eligibility (`AGE_GE_12` and `HIGH_RISK`) |
+| `CONTRAINDICATION_LEVEL` | Ordinal severity (0–3) of contraindications |
+| `DAYS_SYMPTOM_TO_DX` | Days between symptom onset and diagnosis |
+| `PHYSICIAN_ID` | Identifier of diagnosing physician |
+| `PHYSICIAN_TYPE` | Physician specialty |
+| `PHYSICIAN_STATE` | Two-letter state abbreviation |
+| `LOCATION_TYPE` | Encounter location (e.g., `office`, `telehealth`, `hospital`) |
+| `PHYS_TREAT_RATE` | Physician’s historical treatment rate (Bayesian LOO estimate) |
+| `TARGET` | Label: 1 = treated with Drug A, 0 = untreated |
+
+---
+
+### 📂 Data File
+
+📄 [**model_table.csv**](data/processed/model_table.csv)
+
+
+
+
 ---
 
 ## 🤖 Step 3 – Modeling & Evaluation
