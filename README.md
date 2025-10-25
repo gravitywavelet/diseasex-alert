@@ -85,6 +85,7 @@ A Bayesian smoothing algorithm was specifically designed for PHYS_TREAT_RATE, si
 However, this approach did not perform as well as expected, likely due to a high proportion of missing or extremely limited physician-level data.
 
 ![Bayesian Smooth Plot](artifacts/images/equa.png)
+Where A=B=0.25, k = treated count, n = diagnosed count.
 
 
 ### 📄 Data Dictionary
