@@ -321,6 +321,16 @@ Expected Output
 | **Containerization** | Dockerized deployment ensuring full reproducibility and environment portability. |
 
 
+flowchart LR
+    A[Patient JSON Input] --> B[Schema & Type Validation]
+    B --> C[Preprocessing & Feature Building]
+    C --> D[Load Trained Pipeline (joblib)]
+    D --> E[Model.predict_proba(x)]
+    E --> F{p_treated < ALERT_THRESHOLD?}
+    F -- Yes --> G[Flag as Alert (Under-treated Risk)]
+    F -- No --> H[No Alert]
+    G --> I[Log Decision & Return JSON]
+    H --> I[Log Decision & Return JSON]
 
 ---
 
