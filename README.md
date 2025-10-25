@@ -16,11 +16,11 @@ Steps Description
 1. Data Cleaning
 2. Feature Engineering
 3. Modeling & Evaluation
-4. EMA Aleart Simulation
-4. API Deployment (FastAPI)
-5. Containerization
-6. Software Architecture
-7. Version Control
+4. EMR Alart Simulation
+5. API Deployment (FastAPI)
+6. Containerization
+7. Software Architecture
+8. Version Control
 ⸻
 
 🧩 Project Structure
@@ -205,7 +205,7 @@ Response:
 }
 ⸻
 
-## 🚀 Step 5 Containerization: Docker Deployment
+## 🚀 Step 6 Containerization: Docker Deployment
 
 ### Build the image
 
@@ -244,7 +244,7 @@ Expected Output
 
 ⸻
 
-## 🚀 Step 6  Software Architecture
+## 🚀 Step 7  Software Architecture
 
 ### 🧩 Components Overview
 
@@ -269,7 +269,7 @@ Expected Output
 ⸻
 
 
-## 🧭 Version Control Strategy
+## 🧭 Step 8 Version Control Strategy
 
 | **Element** | **Strategy** |
 |--------------|--------------|
@@ -336,22 +336,6 @@ Expected Output
 - **Environment Parity:**
   Docker and `requirements.txt` ensure identical configurations across dev, staging, and production environments.
 
-### 🔁 MLOps Integration
-
-- **CI/CD Pipeline:**
-  Continuous integration (via GitHub Actions or GitLab CI) automatically tests, builds, and deploys new model versions.
-
-- **Automated Retraining:**
-  Scheduled retraining workflows (e.g., Airflow or Prefect) refresh the model as new EMR data is ingested, maintaining predictive stability.
-
-- **Model Validation Gates:**
-  Each new version must pass ROC-AUC and F2 score thresholds before deployment, preventing performance regression.
-
-- **Artifact Versioning:**
-  Models, metrics, and preprocessing schemas are version-controlled, ensuring full lineage and rollback capability.
-
-- **Environment Parity:**
-  Docker and `requirements.txt` ensure identical configurations across dev, staging, and production environments.
 
 ---
 
