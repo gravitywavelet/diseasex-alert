@@ -26,48 +26,7 @@ Steps Description
 
 🧩 Project Structure
 
-├── app/                    # Main application package
-│   ├── api.py              # FastAPI endpoints for prediction
-│   ├── config.py           # Configuration and constants
-│   ├── main.py             # CLI / app entrypoint
-│   ├── main_html.py        # (optional) HTML demo interface
-│   ├── model.py            # Model loading & inference
-│   ├── preprocessing.py    # Feature preprocessing pipeline
-│   ├── schema.py           # Pydantic request/response schemas
-│   └── static/             # Front-end assets (if any)
-│
-├── training/               # Offline model training components
-│   ├── train.py            # Model training & CV evaluation
-│   └── inference.py        # Batch or API inference utilities
-│
-├── artifacts/              # Saved models, metrics & plots
-│   ├── model_minimal.joblib
-│   ├── metrics_baseline.json
-│   ├── roc_curve_minimal.png
-│   ├── pr_curve_minimal.png
-│   ├── threshold.json
-│   ├── emr_alerts_60pct.csv
-│   └── xgb_shap_global_importance.csv
-│
-├── data/
-│   ├── clean/              # Cleaned tables (Fact and Dim)
-│   └── processed/          # Final model_table.csv (submission file)
-│
-├── notebooks/              # Jupyter notebooks (EDA, modeling, SHAP)
-│   ├── 0_EDA.ipynb
-│   ├── 1a_Preprocessing_clean.ipynb
-│   ├── 2a_Preprocessing_modeltable.ipynb
-│   ├── 3b_modeling.ipynb
-│   └── DSI LT Interview Exercise – Oct 2025 (candidate).xlsx (Raw Data)
-│
-├── tests/                  # Unit tests for API
-│   ├── test_api.py
-│   └── test_fastapi.py
-│
-├── Dockerfile
-├── requirements.txt
-└── README.md
-
+![Folder Strucure](/artifacts/images/foldtree.png)
 ---
 # Step 0 - EDA (Evaluate data and form actions to be taken)
 Scripts in `notebooks/0_EDA.ipynb`
@@ -140,6 +99,9 @@ The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innova
 | LightGBM | 0.76 | 0.35 | 0.70 | 0.30 | 0.67 | 0.41 | 0.53 |
 | **XGBoost (final)** | **0.76 – 0.78** | **0.35 – 0.36** | **0.70** | **0.30** | **0.68** | **0.41** | **0.54** |
 
+
+
+
 # 🏆 Final Model: XGBoost (`model_minimal.joblib`)
 Chosen for its strong balance of **accuracy, recall, and interpretability**.
 - Robust to mixed categorical / numeric inputs via one-hot encoding
@@ -160,7 +122,8 @@ Chosen for its strong balance of **accuracy, recall, and interpretability**.
 
 > *LightGBM produced comparable performance (ROC ≈ 0.76) but was ultimately not selected due to slightly higher variance in recall and less stable SHAP consistency.*
 
-![SHAP Summary Plot](notebooks/artifacts/SHAP.png)
+![SHAP Summary Plot](artifacts/images/SHAP.png)
+![SHAP Summary Plot](artifacts/images/corr.png)
 ---
 
 # 🩺 Step 4 – EMR Alert Simulation
@@ -174,7 +137,7 @@ Alerts target **least likely to be treated**.
 | 90 % | 0.96 | 0.85 | 0.94 |
 
 ➡ Recommended coverage **60 – 70 %** to balance recall vs workload.
-![SHAP Summary Plot](notebooks/artifacts/cutoff.png)
+![SHAP Summary Plot](artifacts/images/cutoff.png)
 
 ---
 
