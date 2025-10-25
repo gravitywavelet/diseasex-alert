@@ -167,8 +167,8 @@ Goal: achieve high recall for under-treated patients while preventing overfittin
 ## 🏆 Final Model: XGBoost (`model_minimal.joblib`)
 Chosen for its strong balance of **accuracy, recall, and interpretability**.
 - Robust to mixed categorical / numeric inputs via one-hot encoding
-- Handles **non-linear effects** and **imbalanced classes** using `scale_pos_weight`
-- highest AUC-ROC, PR-AUC and especially F2
+- Handles **non-linear effects** and **imbalanced classes** using `scale_pos_weight`, SPG>5, which is quiet imbalanced.
+- highest AUC-ROC, PR-AUC and especially **F2**
 
 ## 📈 Model Insights (SHAP Feature Contributions)
 **Top positive influencers (increase treatment likelihood):**
@@ -178,7 +178,7 @@ Chosen for its strong balance of **accuracy, recall, and interpretability**.
 - **`PHYSICIAN_TYPE = family / internal medicine`** — higher prescribing tendency
 
 **Top negative influencers (reduce treatment likelihood):**
-- **`LOCATION_TYPE = telehealth` or `independent laboratory`** — lower likelihood of treatment initiation
+- **`LOCATION_TYPE = telehealth` or `independent laboratory`** — lower likelihood of treatment initiation (Maybe need enhace the telehealth channel)
 - **`younger patients` (< 40 yrs)** — less likely to be treated despite eligibility
 - **`high contraindication levels`** — safety constraints decreasing probability
 
@@ -197,7 +197,8 @@ Alerts target **least likely to be treated**.
 | 70 % | 0.81 | 0.93 | 0.83 |
 | 90 % | 0.96 | 0.85 | 0.94 |
 
-➡ Recommended coverage **60 – 70 %** to balance recall vs workload.
+➡ Recommended routine coverage **70 %** to balance recall vs workload. Entry coverage 60% to archive 95% precision. Outbreak period, coverage 90%, precision can still be 85%.
+![Coverage Plot](artifacts/images/coverage.png)
 ![Cutoff Plot](artifacts/images/cutoff.png)
 
 ---
