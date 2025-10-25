@@ -346,9 +346,9 @@ def run_training(
     }
     save_metrics_json(METRICS_PATH, payload)
 
-    print("\n✅ Final model trained on all data and saved.")
-    print(f"💾 Pipeline: {MODEL_PATH}")
-    print(f"📊 Metrics : {METRICS_PATH}")
+    print("\n Final model trained on all data and saved.")
+    print(f" Pipeline: {MODEL_PATH}")
+    print(f" Metrics : {METRICS_PATH}")
 
 
 # -----------------------

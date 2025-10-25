@@ -98,6 +98,34 @@ The first two (`DAYS_SYMPTOM_TO_DX` and `PHYS_TREAT_RATE`) are the **most innova
 | LightGBM | 0.76 | 0.35 | 0.70 | 0.30 | 0.67 | 0.41 | 0.53 |
 | **XGBoost (final)** | **0.76 – 0.78** | **0.35 – 0.36** | **0.70** | **0.30** | **0.68** | **0.41** | **0.54** |
 
+![model result plot](artifacts/images/result.png)
+
+### cross-validation (CV) strategy
+
+The model was evaluated using a 5×2 cross-validation (CV) strategy — that is, 5 folds repeated twice with different random splits to ensure stable and unbiased performance estimation.
+This approach provides both variance estimation and robustness across different train/test partitions.
+
+### Hyperparameter Optimization
+
+The model’s parameters were tuned using randomized search over a compact but effective search space. Each trial sampled different values for learning rate, tree depth, regularization, and sampling ratios — balancing exploration and efficiency.
+
+param_dist = {
+    "learning_rate": uniform(0.02, 0.02),   # 0.02–0.04
+    "max_depth": randint(3, 6),              # 3–5
+    "min_child_weight": randint(1, 4),       # 1–3
+    "reg_lambda": uniform(1.5, 1.5),         # 1.5–3.0
+    "reg_alpha": uniform(0.5, 0.5),          # 0.5–1.0
+    "gamma": uniform(0.0, 0.1),              # pruning strength
+    "subsample": uniform(0.75, 0.25),        # 0.75–1.0
+    "colsample_bytree": uniform(0.75, 0.25)  # 0.75–1.0
+}
+
+Search method:
+	•	Used RandomizedSearchCV with 5×2 cross-validation, testing 30 random combinations.
+	•	Evaluated each trial by ROC-AUC to select the most stable, high-recall configuration.
+	•	The best parameters were then retrained on the full training set for final deployment.
+
+Goal: achieve high recall for under-treated patients while preventing overfitting.
 
 
 
@@ -135,7 +163,7 @@ Alerts target **least likely to be treated**.
 | 90 % | 0.96 | 0.85 | 0.94 |
 
 ➡ Recommended coverage **60 – 70 %** to balance recall vs workload.
-![SHAP Summary Plot](artifacts/images/cutoff.png)
+![Cutoff Plot](artifacts/images/cutoff.png)
 
 ---
 
@@ -255,6 +283,8 @@ Expected Output
 | **Inference Layer** | Lightweight FastAPI REST service that loads the model and predicts treatment likelihood for new patients. |
 | **Alert Layer** | Applies thresholds to flag patients with low predicted treatment probability (potential under-treatment). |
 | **Containerization** | Dockerized deployment ensuring full reproducibility and environment portability. |
+
+
 
 ---
 

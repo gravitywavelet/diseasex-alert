@@ -105,7 +105,7 @@ def run_inference(
         if "ELIGIBLE" not in scored.columns:
             raise ValueError("ELIGIBLE column missing but --eligible-only set.")
         base = scored[scored["ELIGIBLE"] == 1].copy()
-        print(f"ℹ️  Using ELIGIBLE==1 subset for alert slicing (n={len(base)})")
+        print(f" Using ELIGIBLE==1 subset for alert slicing (n={len(base)})")
 
     # Coverage slices: take the bottom X% by P_TREATED
     for cov in coverages:
@@ -127,7 +127,7 @@ def run_inference(
     n = len(scored)
     msg_id = f" (id_col={id_col})" if id_col and id_col in scored.columns else ""
     print(
-        f"\n✅ Inference complete for {n} rows{msg_id}.\n"
+        f"\n Inference complete for {n} rows{msg_id}.\n"
         f"   Min/Median/Max P_TREATED: "
         f"{scored['P_TREATED'].min():.3f} / "
         f"{scored['P_TREATED'].median():.3f} / "
