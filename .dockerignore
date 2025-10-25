@@ -1,0 +1,52 @@
+# -----------------------------
+# Python cache & build files
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache
+*.egg-info/
+build/
+dist/
+
+# -----------------------------
+# Virtual environments
+# -----------------------------
+.venv/
+.venv*/
+env/
+venv/
+
+# -----------------------------
+# Jupyter notebooks & large data
+# -----------------------------
+notebooks/
+*.ipynb
+data/
+*.csv
+*.parquet
+*.xlsx
+
+# -----------------------------
+# Logs & temp files
+# -----------------------------
+*.log
+logs/
+tmp/
+artifacts/api_requests.log
+bak/
+
+# -----------------------------
+# IDE / OS metadata
+# -----------------------------
+.DS_Store
+.vscode/
+.idea/
+
+# -----------------------------
+# Git & compose files (optional)
+# -----------------------------
+.git/
+.gitignore
+docker-compose.yml

@@ -1,0 +1,26 @@
+# --- Core scientific stack ---
+numpy==2.3.4
+pandas==2.3.3
+matplotlib==3.10.7
+scikit-learn==1.7.2
+imbalanced-learn==0.14.0
+joblib==1.5.2
+packaging==25.0
+python-dateutil==2.9.0.post0
+
+# Gradient boosting (pinned to your working version)
+xgboost==2.1.4
+lightgbm==4.6.0
+
+# Explainability & IO used in notebooks
+shap==0.45.1
+openpyxl==3.1.5
+
+# --- API & serving ---
+fastapi==0.119.0
+uvicorn[standard]==0.37.0
+pydantic==2.12.3
+
+# --- Testing ---
+pytest==8.3.3
+httpx==0.28.1

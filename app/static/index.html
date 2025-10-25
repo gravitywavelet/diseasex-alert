@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>DiseaseX • Drug A Alert</title>
+<style>
+  :root{
+    --bg:#f4f7fb;--card:#fff;--text:#1f2937;--muted:#6b7280;
+    --primary:#1246A5;--primary-pressed:#0d3580;--ok:#16a34a;
+    --warn:#f97316;--danger:#dc2626;--ring:#dbeafe;--shadow:0 10px 30px rgba(0,0,0,.08)
+  }
+  html,body{height:100%} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial}
+  .shell{max-width:1080px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:3fr 2fr;gap:24px}
+  .panel{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:20px}
+  h1{margin:0 0 8px;font-size:22px} h2{margin:0 0 12px;font-size:18px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+  input,select{width:100%;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff}
+  input:focus,select:focus{outline:none;box-shadow:0 0 0 3px var(--ring);border-color:#93c5fd}
+  .btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:12px;padding:12px 16px;cursor:pointer;font-weight:600}
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-primary:hover{background:var(--primary-pressed)}
+  .btn-secondary{background:#e5e7eb}
+  .btn-tertiary{background:#f1f5f9}
+  .stack{display:flex;gap:12px;flex-wrap:wrap}
+  .muted{color:var(--muted)}
+  .pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:6px 10px;font-weight:600}
+  .pill-ok{background:#dcfce7;color:#166534}
+  .pill-warn{background:#ffedd5;color:#9a3412}
+  .pill-danger{background:#fee2e2;color:#991b1b}
+  .stat{font-size:14px}
+  .stat b{font-size:22px}
+  .divider{height:1px;background:#eef2f7;margin:16px 0}
+
+  /* Clinical suggestions card (quiet) */
+  .suggest{display:none;background:#fcfffc;border:1px solid #e2f6e7}
+  .suggest .icon{width:22px;height:22px;background:#22c55e;color:#fff;border-radius:50%;display:inline-grid;place-items:center;font-weight:800}
+
+  /* Modal alert */
+  .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px}
+  .modal{max-width:640px;width:100%;background:var(--card);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  .modal header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid #eef2f7}
+  .modal h3{margin:0;font-size:22px}
+  .x{border:0;background:transparent;font-size:22px;cursor:pointer;color:#4b5563}
+  .modal main{padding:18px 20px}
+  .modal footer{padding:16px 20px;background:#fff7ed;color:#7c2d12;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Left: Patient form -->
+  <section class="panel">
+    <h1>Patient Snapshot</h1>
+    <p class="muted" style="margin-top:2px">Send features to the model and get a treatment-likelihood + alert decision.</p>
+    <div class="divider"></div>
+
+    <form id="patientForm">
+      <div class="row">
+        <div>
+          <label>Diagnosis Date (DISEASEX_DT)</label>
+          <input type="date" id="DISEASEX_DT" required />
+        </div>
+        <div>
+          <label>Patient Age</label>
+          <input type="number" id="PATIENT_AGE" min="0" max="120" value="52" required />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <div>
+          <label>Gender</label>
+          <select id="PATIENT_GENDER">
+            <option value="F" selected>F</option>
+            <option value="M">M</option>
+          </select>
+        </div>
+        <div>
+          <label># High-risk Conditions</label>
+          <input type="number" id="NUM_CONDITIONS" min="0" value="3" />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <div>
+          <label>Physician Type</label>
+          <input id="PHYSICIAN_TYPE" value="internal medicine" />
+        </div>
+        <div>
+          <label>Physician State</label>
+          <input id="PHYSICIAN_STATE" value="CA" />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <div>
+          <label>Location Type</label>
+          <input id="LOCATION_TYPE" value="office" />
+        </div>
+      </div>
+
+      <div class="stack" style="margin-top:16px">
+        <button class="btn btn-primary" type="submit">Score Patient</button>
+        <button class="btn btn-tertiary" type="button" id="fillExample">Fill “High-miss” Example</button>
+      </div>
+    </form>
+
+    <div class="divider"></div>
+
+    <div id="result" class="stack" style="align-items:center;display:none">
+      <span id="pill" class="pill"></span>
+      <span class="stat">P(Treated) <b id="ptreated">–</b></span>
+      <span class="stat">P(Untreated) <b id="puntreated">–</b></span>
+      <span class="muted" id="thresholdNote"></span>
+    </div>
+  </section>
+
+  <!-- Right: Clinical suggestions (quiet) -->
+  <aside class="panel suggest" id="suggestCard">
+    <h2 style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <span class="icon">+</span> Clinical Suggestions
+    </h2>
+    <div class="divider"></div>
+    <p id="suggestText" style="margin:0 0 12px 0">
+      Drug A: model suggests low likelihood of under-treatment.
+    </p>
+    <small class="muted">This card shows only when no alert is issued.</small>
+  </aside>
+</div>
+
+<!-- Modal Alert (high miss risk) -->
+<div class="modal-back" id="modalBack">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="alertTitle">
+    <header>
+      <h3 id="alertTitle">Drug A Treatment Alert</h3>
+      <button class="x" id="closeX" aria-label="Close">×</button>
+    </header>
+    <main>
+      <p style="font-size:18px;margin-top:0">
+        This patient may be eligible for Drug A but no order is found.
+      </p>
+      <p id="likelihoodText" style="font-weight:800;color:var(--danger);font-size:22px;margin:12px 0">
+        Likelihood = 0.12 (High Miss Risk)
+      </p>
+      <div class="stack">
+        <button class="btn btn-primary" id="prescribeBtn">Prescribe Now</button>
+        <button class="btn btn-secondary" id="notRelevantBtn">Not Relevant</button>
+        <button class="btn btn-tertiary" id="patientDeclinedBtn">Patient Declined</button>
+      </div>
+    </main>
+    <footer>Consider Drug A if clinically appropriate.</footer>
+  </div>
+</div>
+
+<script>
+  // 👉 Adjust if your API is on another host/port
+  const API_BASE = (location.port === "8000") ? "" : "http://localhost:8000";
+
+  const el = (id) => document.getElementById(id);
+  const form = el("patientForm");
+  const result = el("result");
+  const pill = el("pill");
+  const ptreated = el("ptreated");
+  const puntreated = el("puntreated");
+  const thresholdNote = el("thresholdNote");
+  const suggest = el("suggestCard");
+  const suggestText = el("suggestText");
+
+  const modalBack = el("modalBack");
+  const closeX = el("closeX");
+  const prescribeBtn = el("prescribeBtn");
+  const notRelevantBtn = el("notRelevantBtn");
+  const patientDeclinedBtn = el("patientDeclinedBtn");
+  const likelihoodText = el("likelihoodText");
+
+  function showModal() { modalBack.style.display = "flex"; }
+  function hideModal() { modalBack.style.display = "none"; }
+  closeX.onclick = hideModal;
+  modalBack.addEventListener("click", (e)=> { if(e.target === modalBack) hideModal(); });
+
+  // Simple “action” button handlers (you can wire to your EHR later)
+  prescribeBtn.onclick = ()=>{ alert("Prescribe action sent to EHR (stub)."); hideModal(); };
+  notRelevantBtn.onclick = ()=>{ alert("Not relevant logged (stub)."); hideModal(); };
+  patientDeclinedBtn.onclick = ()=>{ alert("Patient declined logged (stub)."); hideModal(); };
+
+  // Pre-fill with a “likely missed” example that tends to trigger the alert
+  el("fillExample").onclick = ()=>{
+    const today = new Date().toISOString().slice(0,10);
+    el("DISEASEX_DT").value = today;
+    el("PATIENT_AGE").value = 19;
+    el("PATIENT_GENDER").value = "F";
+    el("NUM_CONDITIONS").value = 22;
+    el("PHYSICIAN_TYPE").value = "psychiatry";
+    el("PHYSICIAN_STATE").value = "IL";
+    el("LOCATION_TYPE").value = "unassigned";
+    result.style.display = "none"; suggest.style.display = "none"; hideModal();
+  };
+
+  form.onsubmit = async (e)=>{
+    e.preventDefault();
+    result.style.display = "none"; suggest.style.display = "none"; hideModal();
+
+    const payload = {
+      DISEASEX_DT: el("DISEASEX_DT").value,
+      PATIENT_AGE: Number(el("PATIENT_AGE").value),
+      PATIENT_GENDER: el("PATIENT_GENDER").value,
+      NUM_CONDITIONS: Number(el("NUM_CONDITIONS").value),
+      PHYSICIAN_TYPE: el("PHYSICIAN_TYPE").value,
+      PHYSICIAN_STATE: el("PHYSICIAN_STATE").value,
+      LOCATION_TYPE: el("LOCATION_TYPE").value
+    };
+
+    try{
+      const resp = await fetch(`${API_BASE}/alert`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+      });
+      if(!resp.ok){ throw new Error(`API ${resp.status}`); }
+      const data = await resp.json();
+
+      // Update stats strip
+      ptreated.textContent = data.P_TREATED.toFixed(3);
+      puntreated.textContent = (1 - data.P_TREATED).toFixed(3);
+      thresholdNote.textContent = `threshold=${data.threshold.toFixed(2)}`;
+      result.style.display = "flex";
+
+      // UI branch: modal vs quiet suggestion
+      if (data.alert) {
+        pill.className = "pill pill-danger";
+        pill.textContent = "High Miss Risk";
+        likelihoodText.textContent = `Likelihood = ${data.P_TREATED.toFixed(2)} (High Miss Risk)`;
+        showModal();
+      } else {
+        pill.className = "pill pill-ok";
+        pill.textContent = "No Alert";
+        suggestText.textContent = "Drug A: model suggests low likelihood of under-treatment.";
+        suggest.style.display = "block";
+      }
+    }catch(err){
+      alert("API error: " + err.message);
+    }
+  };
+</script>
+</body>
+</html>

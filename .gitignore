@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv*/
+env*/
+*.egg-info/
+bak/
+
+# Data & artifacts
+data/raw/
+data/clean/
+notebooks/
+artifacts/*.npy
+artifacts/*.png
+artifacts/*.json
+artifacts/*.joblib
+artifacts/*.csv.gz
+
+# Environment
+.DS_Store
+.ipynb_checkpoints/
+*.ipynb

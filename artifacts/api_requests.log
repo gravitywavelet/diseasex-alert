@@ -1,0 +1,113 @@
+2025-10-22 18:05:32,715 | INFO | GET /docs [200] 0.000s
+2025-10-22 18:05:32,879 | INFO | GET /openapi.json [200] 0.003s
+2025-10-22 18:05:33,944 | INFO | GET /docs [200] 0.001s
+2025-10-22 18:05:34,098 | INFO | GET /openapi.json [200] 0.000s
+2025-10-22 18:05:46,553 | INFO | GET /docs [200] 0.000s
+2025-10-22 18:05:46,792 | INFO | GET /openapi.json [200] 0.000s
+2025-10-22 18:09:53,840 | INFO | Prediction made | Age=45.0 | P_TREATED=0.999
+2025-10-22 18:09:53,841 | INFO | POST /predict [200] 0.004s
+2025-10-22 18:09:53,844 | INFO | Alert check | Age=45.0 | P_TREATED=0.999 | Alert=False
+2025-10-22 18:09:53,845 | INFO | POST /alert [200] 0.003s
+2025-10-22 18:24:45,802 | INFO | Prediction made | Age=45.0 | P_TREATED=0.999
+2025-10-22 18:24:45,802 | INFO | POST /predict [200] 0.004s
+2025-10-22 18:24:45,807 | INFO | Alert check | Age=45.0 | P_TREATED=0.999 | Alert=False
+2025-10-22 18:24:45,807 | INFO | POST /alert [200] 0.002s
+2025-10-22 18:38:29,085 | INFO | GET /docs [200] 0.000s
+2025-10-22 18:38:29,341 | INFO | GET /openapi.json [200] 0.009s
+2025-10-22 18:40:29,675 | INFO | Prediction | Age=45.0 | P_TREATED=0.999
+2025-10-22 18:40:29,676 | INFO | POST /predict [200] 0.014s
+2025-10-22 18:44:01,637 | INFO | Prediction | Age=22.0 | P_TREATED=0.940
+2025-10-22 18:44:01,638 | INFO | POST /predict [200] 0.008s
+2025-10-22 18:45:07,439 | INFO | Prediction | Age=18.0 | P_TREATED=0.133
+2025-10-22 18:45:07,439 | INFO | POST /predict [200] 0.008s
+2025-10-22 19:47:45,021 | INFO | Prediction | Age=28.0 | P_TREATED=0.998
+2025-10-22 19:47:45,022 | INFO | POST /predict [200] 0.006s
+2025-10-22 20:17:31,837 | INFO | GET /docs [200] 0.001s
+2025-10-22 20:17:31,994 | INFO | GET /openapi.json [200] 0.011s
+2025-10-22 20:19:20,562 | INFO | GET / [307] 0.003s
+2025-10-22 20:19:20,571 | INFO | GET /static/index.html [200] 0.006s
+2025-10-22 20:19:20,796 | INFO | GET /favicon.ico [404] 0.000s
+2025-10-22 20:19:33,622 | INFO | Alert | Age=19.0 | P_TREATED=0.999 | Threshold=0.4 | Alert=False
+2025-10-22 20:19:33,623 | INFO | POST /alert [200] 0.022s
+2025-10-22 20:19:55,769 | INFO | GET / [307] 0.001s
+2025-10-22 20:20:08,176 | INFO | GET / [307] 0.001s
+2025-10-22 20:20:14,711 | INFO | Alert | Age=19.0 | P_TREATED=0.999 | Threshold=0.4 | Alert=False
+2025-10-22 20:20:14,712 | INFO | POST /alert [200] 0.012s
+2025-10-22 20:20:53,307 | INFO | Alert | Age=19.0 | P_TREATED=1.000 | Threshold=0.4 | Alert=False
+2025-10-22 20:20:53,307 | INFO | POST /alert [200] 0.009s
+2025-10-22 20:20:54,932 | INFO | Alert | Age=19.0 | P_TREATED=1.000 | Threshold=0.4 | Alert=False
+2025-10-22 20:20:54,932 | INFO | POST /alert [200] 0.067s
+2025-10-22 20:21:05,547 | INFO | Alert | Age=19.0 | P_TREATED=1.000 | Threshold=0.4 | Alert=False
+2025-10-22 20:21:05,547 | INFO | POST /alert [200] 0.010s
+2025-10-22 20:21:38,108 | INFO | Alert | Age=19.0 | P_TREATED=0.999 | Threshold=0.4 | Alert=False
+2025-10-22 20:21:38,109 | INFO | POST /alert [200] 0.010s
+2025-10-22 20:23:46,976 | INFO | Alert | Age=78.0 | P_TREATED=1.000 | Threshold=0.4 | Alert=False
+2025-10-22 20:23:46,977 | INFO | POST /alert [200] 0.009s
+2025-10-22 20:25:20,143 | INFO | Alert | Age=78.0 | P_TREATED=1.000 | Threshold=0.4 | Alert=False
+2025-10-22 20:25:20,144 | INFO | POST /alert [200] 0.011s
+2025-10-22 20:25:35,043 | INFO | Alert | Age=32.0 | P_TREATED=0.999 | Threshold=0.4 | Alert=False
+2025-10-22 20:25:35,044 | INFO | POST /alert [200] 0.012s
+2025-10-22 20:30:02,273 | INFO | Alert | Age=45.0 | P_TREATED=0.999 | Threshold=0.4 | Alert=False
+2025-10-22 20:30:02,274 | INFO | POST /alert [200] 0.012s
+2025-10-22 20:31:09,202 | INFO | Alert | Age=45.0 | P_TREATED=0.998 | Threshold=0.4 | Alert=False
+2025-10-22 20:31:09,203 | INFO | POST /alert [200] 0.009s
+2025-10-22 20:31:27,669 | INFO | Alert | Age=45.0 | P_TREATED=0.970 | Threshold=0.4 | Alert=False
+2025-10-22 20:31:27,670 | INFO | POST /alert [200] 0.009s
+2025-10-22 20:32:06,965 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:32:06,966 | INFO | POST /alert [200] 0.009s
+2025-10-22 20:32:49,633 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:32:49,634 | INFO | POST /alert [200] 0.009s
+2025-10-22 20:32:50,934 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:32:50,934 | INFO | POST /alert [200] 0.011s
+2025-10-22 20:33:02,366 | INFO | Alert | Age=45.0 | P_TREATED=0.950 | Threshold=0.4 | Alert=False
+2025-10-22 20:33:02,367 | INFO | POST /alert [200] 0.010s
+2025-10-22 20:33:14,598 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:33:14,598 | INFO | POST /alert [200] 0.010s
+2025-10-22 20:33:51,871 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:33:51,872 | INFO | POST /alert [200] 0.013s
+2025-10-22 20:33:53,632 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:33:53,633 | INFO | POST /alert [200] 0.011s
+2025-10-22 20:34:01,609 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:34:01,610 | INFO | POST /alert [200] 0.014s
+2025-10-22 20:34:10,733 | INFO | Alert | Age=45.0 | P_TREATED=0.949 | Threshold=0.4 | Alert=False
+2025-10-22 20:34:10,734 | INFO | POST /alert [200] 0.009s
+2025-10-22 20:34:21,031 | INFO | GET / [307] 0.001s
+2025-10-22 20:34:21,034 | INFO | GET /static/index.html [304] 0.001s
+2025-10-22 20:35:46,360 | INFO | GET / [404] 0.001s
+2025-10-22 20:35:51,423 | INFO | GET / [404] 0.001s
+2025-10-22 20:41:53,806 | INFO | GET / [404] 0.001s
+2025-10-22 20:42:01,901 | INFO | GET / [404] 0.002s
+2025-10-22 20:44:47,797 | INFO | GET / [307] 0.002s
+2025-10-22 20:44:47,802 | INFO | GET /docs [200] 0.001s
+2025-10-22 20:44:47,967 | INFO | GET /openapi.json [200] 0.009s
+2025-10-22 20:45:27,549 | INFO | Prediction | Age=45.0 | P_TREATED=0.999
+2025-10-22 20:45:27,549 | INFO | POST /predict [200] 0.011s
+2025-10-22 20:45:48,981 | INFO | Alert | Age=45.0 | P_TREATED=0.999 | Threshold=0.4 | Alert=False
+2025-10-22 20:45:48,982 | INFO | POST /alert [200] 0.008s
+2025-10-22 20:47:01,988 | INFO | Alert | Age=19.0 | P_TREATED=0.991 | Threshold=0.4 | Alert=False
+2025-10-22 20:47:01,988 | INFO | POST /alert [200] 0.011s
+2025-10-22 20:47:33,807 | INFO | POST /alert [422] 0.001s
+2025-10-22 20:47:53,105 | INFO | Alert | Age=19.0 | P_TREATED=0.991 | Threshold=0.4 | Alert=False
+2025-10-22 20:47:53,105 | INFO | POST /alert [200] 0.012s
+2025-10-22 20:50:38,210 | INFO | Prediction | Age=19.0 | P_TREATED=0.991
+2025-10-22 20:50:38,211 | INFO | POST /predict [200] 0.007s
+2025-10-22 21:43:42,741 | INFO | Alert | Age=22.0 | P_TREATED=0.986 | Threshold=0.4 | Alert=False
+2025-10-22 21:43:42,742 | INFO | POST /alert [200] 0.008s
+2025-10-25 10:58:00,246 | INFO | GET /health [404] 0.000s
+2025-10-25 10:58:25,845 | INFO | GET /docs [200] 0.001s
+2025-10-25 10:58:26,782 | INFO | GET /openapi.json [200] 0.008s
+2025-10-25 10:58:53,931 | INFO | Prediction | Age=58.0 | P_TREATED=0.807
+2025-10-25 10:58:53,932 | INFO | POST /predict [200] 0.011s
+2025-10-25 10:59:41,321 | INFO | POST /predict_batch [404] 0.000s
+2025-10-25 10:59:49,293 | INFO | POST /predict_batch [404] 0.000s
+2025-10-25 11:01:33,988 | INFO | Prediction | Age=58.0 | P_TREATED=0.773
+2025-10-25 11:01:33,988 | INFO | POST /predict [200] 0.003s
+2025-10-25 11:02:17,284 | INFO | POST /predict_batch [404] 0.000s
+2025-10-25 11:02:30,333 | INFO | POST /predict_batch [404] 0.000s
+2025-10-25 11:03:24,485 | INFO | POST /predict [422] 0.002s
+2025-10-25 11:05:30,680 | INFO | Prediction | Age=58.0 | P_TREATED=0.773
+2025-10-25 11:05:30,680 | INFO | POST /predict [200] 0.004s
+2025-10-25 11:07:21,817 | INFO | Prediction | Age=58.0 | P_TREATED=0.773
+2025-10-25 11:07:21,817 | INFO | POST /predict [200] 0.005s
+2025-10-25 11:08:04,255 | INFO | Prediction | Age=58.0 | P_TREATED=0.773
+2025-10-25 11:08:04,255 | INFO | POST /predict [200] 0.005s
