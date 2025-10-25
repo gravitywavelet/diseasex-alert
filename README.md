@@ -81,17 +81,10 @@ New (non-trivial) features are:
 - `ELIGIBLE`
 
 The first two features — DAYS_SYMPTOM_TO_DX and PHYS_TREAT_RATE — are the most innovative, as they capture temporal and behavioral dynamics that align with real-world, data-driven decision processes.
-A Bayesian smoothing algorithm was specifically designed for PHYS_TREAT_RATE, 
-<div align="center">
-$$
-\hat p_{ij}
-= \mathbb{E}\!\left[p_i \mid \text{others}\right]
-= \frac{\tilde k_{ij} + A}{\tilde n_{ij} + A + B}
-= \frac{k_i - y_{ij} + A}{\,n_i - 1 + A + B\,}
-$$
-</div>
-since standard Laplacian smoothing introduced excessive noise when data were sparse (most physicians had only 0–1 diagnosed Disease X patient, and treated cases were even fewer).
+A Bayesian smoothing algorithm was specifically designed for PHYS_TREAT_RATE, since standard Laplacian smoothing introduced excessive noise when data were sparse (most physicians had only 0–1 diagnosed Disease X patient, and treated cases were even fewer).
 However, this approach did not perform as well as expected, likely due to a high proportion of missing or extremely limited physician-level data.
+
+![Bayesian Smooth Plot](artifacts/images/equa.png)
 
 
 ### 📄 Data Dictionary
