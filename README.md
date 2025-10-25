@@ -33,7 +33,11 @@ Scripts in `notebooks/0_EDA.ipynb`
 
 ## 🧹 Step 1 – Data Cleaning
 First clean data in 3 tables independently before join.
-Scripts in `notebooks/1a_Preprocessing_clean.ipynb` and `notebooks/1b_EDA_post_clean.ipynb`  normalize column names, unify string formats, and enforce correct types.
+Scripts in `notebooks/1a_Preprocessing_clean.ipynb` normalize column names, unify string formats, and enforce correct types. `notebooks/1b_EDA_post_clean.ipynb` verifies the clearning.
+
+Each of the three source tables (the Facts and two dimension tables) is cleaned independently before joining.
+Scripts in notebooks/1a_Preprocessing_clean.ipynb normalize column names, unify string formats, and enforce correct data types, while notebooks/1b_EDA_post_clean.ipynb verifies and validates the cleaning results.
+
 **Key actions**
 
 | Step | Description | Impact |
@@ -43,7 +47,7 @@ Scripts in `notebooks/1a_Preprocessing_clean.ipynb` and `notebooks/1b_EDA_post_c
 | **3. Normalize IDs** | Converted `PATIENT_ID` and `PHYSICIAN_ID` to consistent string or Int64 formats (stripped trailing `.0`, whitespace, “None”) | Prevents join mismatches |
 | **4. Text normalization** | Lowercased and trimmed descriptive columns (`TXN_TYPE`, `TXN_DESC`, `TXN_LOCATION_TYPE`, etc.) | Avoids category fragmentation |
 | **5. State normalization** | Converted physician `STATE` to uppercase and mapped full names → USPS abbreviations (e.g., “California” → “CA”) | Standardizes geolocation features |
-| **6. Gender cleanup** | Restricted to `"m"` / `"f"`, replaced others with `NaN` | Harmonizes patient attributes |
+| **6. Gender cleanup** | Standardized to lower case; invalid set to unknown| Harmonizes patient attributes |
 | **7. TXN_TYPE filtering** | Restricted to allowed values `{conditions, symptoms, contraindications, treatments}` | Removes irrelevant transactions |
 | **8. Summary reporting** | Printed counts of dropped duplicates, null ratios, and normalized unique values | Ensures transparent QA |
 
@@ -57,30 +61,18 @@ Clean versions of all three tables:
 ## 🧠 Step 2 – Feature Engineering
 Each row in `model_table.csv` corresponds to a **unique patient_id**.
 
-| Category | Features | Description |
-|-----------|-----------|-------------|
-| **Demographics** | `PATIENT_AGE`, `PATIENT_GENDER`, `IS_AGE65PLUS`, `AGE_GE_12` | Derived from birth year and diagnosis/symptom onset |
-| **Clinical risk** | `NUM_CONDITIONS`, `HAS_UNDERLYING`, `HIGH_RISK`, `ELIGIBLE` | Encodes comorbidity and eligibility logic |
-| **Contraindications** | `CONTRAINDICATION_LEVEL` | 0–3 ordinal risk level |
-| **Timing** | `DAYS_SYMPTOM_TO_DX` | Days between symptom onset and diagnosis |
-| **Physician & Location** | `PHYSICIAN_TYPE`, `PHYSICIAN_STATE`, `LOCATION_TYPE`, `PHYS_TREAT_RATE` | Context of care and physician propensity |
-| **Target** | `TARGET` | Whether the patient ever received Drug A |
-
-### New Features Added
-
-In addition to the base columns described in the data dictionary, the following **engineered features** were created to improve model performance and interpretability:
-
-| Feature | Description | Rationale |
-|----------|--------------|------------|
-| **DAYS_SYMPTOM_TO_DX** | Number of days between first symptom onset and Disease X diagnosis (−14 → 30 range, clipped) | Captures care-seeking and diagnostic delays, which strongly influence treatment likelihood. |
-| **PHYS_TREAT_RATE** | Bayesian leave-one-out (LOO) physician-level treatment propensity using a weak Beta(0.125, 0.125) prior | Models physician behavioral tendency to prescribe Drug A while preventing target leakage. |
-| **CONTRAINDICATION_LEVEL** | Ordinal feature (0–3) summarizing maximum contraindication severity per patient | Encodes potential safety constraints affecting treatment decisions. |
-| **HIGH_RISK** | Composite flag (`IS_AGE65PLUS or HAS_UNDERLYING`) | Captures elevated risk status relevant for treatment eligibility. |
-| **ELIGIBLE** | Composite flag (`AGE_GE_12 and HIGH_RISK`) | Simplifies model learning by pre-encoding clinical eligibility criteria. |
+| **Category** | **Features** | **Description** | **Rationale** |
+|---------------|--------------|------------------|----------------|
+| **Demographics** | `PATIENT_AGE`, `PATIENT_GENDER`, `IS_AGE65PLUS`, `AGE_GE_12` | Derived from birth year and diagnosis or symptom onset | Captures demographic eligibility and age-related treatment bias |
+| **Clinical Risk** | `NUM_CONDITIONS`, `HAS_UNDERLYING`, `HIGH_RISK`, `ELIGIBLE` | Encodes comorbidity and eligibility logic | Reflects patient-level risk factors influencing treatment decisions |
+| **Contraindications** | `CONTRAINDICATION_LEVEL` | Ordinal feature (0–3) summarizing severity of contraindications | Represents safety constraints affecting physician decisions |
+| **Timing** | `DAYS_SYMPTOM_TO_DX` | Days between first symptom onset and Disease X diagnosis | Quantifies diagnostic delay, a strong predictor of treatment likelihood |
+| **Physician & Location** | `PHYSICIAN_TYPE`, `PHYSICIAN_STATE`, `LOCATION_TYPE`, `PHYS_TREAT_RATE` | Context of care and physician prescribing propensity | Models behavioral and geographical differences in treatment patterns |
+| **Target** | `TARGET` | Binary outcome — whether the patient received Drug A | Serves as the supervised learning label for model training |
 
 ---
 
-So, your new (non-trivial) features are:
+New (non-trivial) features are:
 - `DAYS_SYMPTOM_TO_DX`
 - `PHYS_TREAT_RATE`
 - `CONTRAINDICATION_LEVEL`
