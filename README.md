@@ -188,8 +188,10 @@ Chosen for its strong balance of **accuracy, recall, and interpretability**.
 ---
 
 # 🩺 Step 4 – EMR Alert Simulation
-Patients ranked by **predicted P(TREATED)** (ascending).
-Alerts target **least likely to be treated**.
+
+Eligible patients are ranked by predicted treatment probability P(TREATED) in ascending order.
+Alerts are generated for patients least likely to be treated, ensuring early intervention for under-treated cases.
+Coverage refers to the bottom percentage of eligible patients flagged by this threshold-based alerting policy.
 
 | Coverage | Recall (untreated) | Precision (true untreated) | F2 |
 |-----------|-------------------|-----------------------------|----|
@@ -197,7 +199,10 @@ Alerts target **least likely to be treated**.
 | 70 % | 0.81 | 0.93 | 0.83 |
 | 90 % | 0.96 | 0.85 | 0.94 |
 
-➡ Recommended routine coverage **70 %** to balance recall vs workload. Entry coverage 60% to archive 95% precision. Outbreak period, coverage 90%, precision can still be 85%.
+➡ A 70% coverage is recommended as the routine operating point to balance recall and workload.
+At an entry-level coverage of 60%, the system achieves approximately 95% precision, ensuring high alert accuracy.
+During an outbreak period, the coverage can be expanded to 90%, while maintaining a precision of around 85%. 
+(Previous studies have shown that physicians tend to reject decision-support systems when precision falls below 85%, underscoring the importance of maintaining high alert precision in clinical settings, even when recall is prioritized.)
 ![Coverage Plot](artifacts/images/coverage.png)
 ![Cutoff Plot](artifacts/images/cutoff.png)
 
