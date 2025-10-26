@@ -8,7 +8,7 @@ From a business perspective, the system provides actionable insights into both w
 
 
 ![map1](artifacts/images/map1.png)
-![map2](artifacts/images/map2.png)
+
 ⸻
 
 ## Project Overview
