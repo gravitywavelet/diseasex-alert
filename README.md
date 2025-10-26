@@ -2,10 +2,13 @@
 
 ## Overview
 
-This project builds a complete, modular pipeline to predict which patients are less likely to be treated with Drug A for Disease X and to simulate EMR alerts that can guide physician follow-up.
-It covers data cleaning → feature engineering → machine-learning modeling → explainability → deployment via FastAPI + Docker.
+This project develops an end-to-end predictive and explainable AI system to identify patients who are less likely to receive Drug A for Disease X, enabling timely intervention and improved treatment equity. The pipeline integrates every stage of the machine-learning lifecycle—from EMR data cleaning and feature engineering to model training, explainability, and deployment via FastAPI and Docker. Using interpretable gradient-boosting models, it estimates the likelihood of Drug A treatment and applies SHAP analysis to uncover the clinical, behavioral, and contextual drivers behind under-treatment patterns.
+
+From a business perspective, the system provides actionable insights into both where and who are driving treatment disparities. Geographically, it reveals differences across U.S. states and care location types such as hospitals, offices, and telehealth settings. Demographically, it highlights patient-level risk factors like age and comorbidities, while at the provider level, it quantifies how physician specialty and practice patterns influence treatment likelihood. Together, these insights support targeted physician engagement, optimized patient outreach, and intelligent EMR alerts that close the gap between clinical guidelines and real-world care delivery.
 
 
+![map1](artifacts/images/map1.png)
+![map2](artifacts/images/map2.png)
 ⸻
 
 ## Project Overview
@@ -355,7 +358,6 @@ Patient and physician data are first preprocessed to build model-ready features.
 |--------------|--------------|
 | **Code** | Follow a clear Git branching model: `main` (stable), `dev` (active development), and `feature/*` (per-feature branches). |
 | **Model Artifacts** | Versioned under `artifacts/` (e.g., `model_minimal_v1.joblib`), tagged with date or commit hash for reproducibility. |
-| **Data** | Maintain versioned processed data (e.g., `data/processed/model_table_v1.csv`) while ensuring schema consistency. |
 | **Merging** | Use Pull Requests (PRs) for all merges; apply *squash commits* to keep history concise and meaningful. |
 | **Conflict Resolution** | Rebase local changes onto `main` before merging and resolve conflicts using VSCode merge tools or CLI (e.g., `git mergetool`). |
 
